@@ -1,0 +1,20 @@
+[build-system]
+requires = ["scikit-build-core", "pybind11"]
+build-backend = "scikit_build_core.build"
+build-dir = "build/{wheel_tag}"
+
+[project]
+name = "mtt"
+version = "0.1.0"
+description = "Multiple Target Tracking Library"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "numpy>=1.20.0",
+    "matplotlib",
+    "murty @ git+https://github.com/Vojtagart/murty.git@master"
+]
+
+[tool.scikit-build]
+cmake.build-type = "Release"
+wheel.packages = ["src/mtt"]
