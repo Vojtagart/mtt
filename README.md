@@ -44,8 +44,14 @@ The Python package exposes the C++ tracking filters via `pybind11` and includes 
 ### Python (via pip)
 The library is built and installed using standard Python packaging tools. `scikit-build-core` will automatically invoke CMake to compile the C++ backend and link the dependencies.
 
+The installation can be done via automated scripts:
+* **Linux/macOS:** `./scripts/install.sh`
+* **Windows:** `.\scripts\install.bat`
+
+or manually:
+
 ```bash
-# Install in the current environment
+# Or install in the current environment
 pip install .
 
 # Or install in editable mode for development
@@ -61,20 +67,14 @@ By default, the package builds in `Release` mode. For development and performanc
 Helper scripts are provided in the `scripts/` directory to automate this:
 
 **1. Debug Mode**
-Compiles without optimizations (`-O0`), adds debug symbols (`-g`), and enables C++ assertions (removes `-DNDEBUG`).
-
-```bash
-./scripts/install_debug.sh
-# Equivalently: SKBUILD_CMAKE_BUILD_TYPE=Debug pip install -e .
-```
+Compiles without optimizations, adds debug symbols, and enables C++ assertions (removes `-DNDEBUG`).
+* **Linux/macOS:** `./scripts/install_debug.sh`
+* **Windows:** `.\scripts\install_debug.bat`
 
 **Profiling Mode (RelWithDebInfo)**
-Compiles with release optimizations (`-O3`) but includes debug symbols (`-g`). This is the recommended mode for running performance benchmarks with tools like `perf` or `valgrind`.
-
-```bash
-./scripts/install_profile.sh
-# Equivalently: SKBUILD_CMAKE_BUILD_TYPE=RelWithDebInfo pip install -e .
-```
+Compiles with release optimizations but includes debug symbols. This is the recommended mode for running performance benchmarks.
+* **Linux/macOS:** `./scripts/install_profile.sh`
+* **Windows:** `.\scripts\install_profile.bat`
 
 ### C++ (via CMake FetchContent)
 
