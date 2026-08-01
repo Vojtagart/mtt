@@ -338,10 +338,15 @@ void merge(mtt::GaussianMixture<Scalar, SDIM>& mix, Scalar min_w, Scalar merge_t
  * @return (means, covariances) of the estimated targets
  */
 template <typename Scalar, int SDIM>
-auto estimator(const mtt::GaussianMixture<Scalar, SDIM>& mix, Scalar conf_thr) {
+auto estimator(const mtt::GaussianMixture<Scalar, SDIM>& mix, Scalar conf_thr, bool reverse = false) {
+
+    auto cmp = [conf_thr, reverse](Scalar r) {
+        return reverse ? (r < conf_thr) : (r >= conf_thr);
+    };
+
     size_t cnt = 0;
     for (size_t i = 0; i < mix.size(); i++) {
-        if (mix.w(i) >= conf_thr)
+        if (cmp(mix.w(i)))
             cnt++;
     }
     int sdim = mix.get_dim();
@@ -351,7 +356,7 @@ auto estimator(const mtt::GaussianMixture<Scalar, SDIM>& mix, Scalar conf_thr) {
 
     size_t idx = 0;
     for (size_t i = 0; i < mix.size(); i++) {
-        if (mix.w(i) >= conf_thr) {
+        if (cmp(mix.w(i))) {
             mus.col(idx) = mix.mu(i);
             Eigen::Map<Eigen::Matrix<Scalar, SDIM, SDIM>>(covs.col(idx).data(), sdim, sdim) = mix.cov(i);
             idx++;

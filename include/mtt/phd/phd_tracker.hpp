@@ -157,8 +157,9 @@ struct Tracker {
     }
 
     auto unconfirmed_tracks(int type = 1) const {
-        throw std::runtime_error("Not implemented yet");
-        return phd::estimator(mix, conf_thr);
+        if (type != 1)
+            throw std::invalid_argument("Unknown estimator type");
+        return phd::estimator(mix, conf_thr, true);
     }
     
     /**
